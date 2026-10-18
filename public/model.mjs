@@ -1,0 +1,4 @@
+export const rooms={shore:{name:'Shore Villa',price:890,maxGuests:2},grove:{name:'Grove Suite',price:590,maxGuests:2},horizon:{name:'Horizon Residence',price:1290,maxGuests:4}};
+export function nightsBetween(a,b){if(!/^\d{4}-\d\d-\d\d$/.test(a)||!/^\d{4}-\d\d-\d\d$/.test(b))return 0;const x=Date.parse(`${a}T00:00:00Z`),y=Date.parse(`${b}T00:00:00Z`);if(!Number.isFinite(x)||!Number.isFinite(y))return 0;const n=(y-x)/86400000;return Number.isInteger(n)&&n>0&&n<=30?n:0}
+export function estimate(room,arrival,departure,guests){const data=rooms[room],n=nightsBetween(arrival,departure),g=Number(guests);if(!data||!n||!Number.isInteger(g)||g<1||g>data.maxGuests)return null;return {room:data.name,nights:n,guests:g,total:data.price*n,nightly:data.price}}
+export function formatMYR(amount){return 'RM '+new Intl.NumberFormat('en-MY',{maximumFractionDigits:0}).format(amount)}
