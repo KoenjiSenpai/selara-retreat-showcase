@@ -1,1 +1,16 @@
-{"name":"Selara — Island hideaway demo","short_name":"Selara","start_url":"/","display":"standalone","background_color":"#f6f1e8","theme_color":"#25483c","icons":[{"src":"/assets/mark.svg","sizes":"any","type":"image/svg+xml"}]}
+{
+  "name": "Selara \u2014 Island hideaway demo",
+  "short_name": "Selara",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f1e8",
+  "theme_color": "#25483c",
+  "icons": [
+    {
+      "src": "/assets/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "description": "Fictional boutique-island-retreat concept by Gerbang Studio"
+}

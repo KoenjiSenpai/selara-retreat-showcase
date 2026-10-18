@@ -1,21 +1,27 @@
-# Selara · An island to come back to yourself
+# Selara Retreat — Somewhere Between Tide & Time
 
-**An original fictional boutique-retreat website prototype for the Gerbang Studio portfolio.** The coastal hero is independently AI-generated artwork. The room and experience illustrations are original SVG designs authored for this project. This is not an operating resort, and no transactions, real inventory, or reservations exist.
+**Gerbang Studio fictional hospitality concept**, version **1.1.0**. A richly illustrated, editorial coastal-retreat website for showcasing design, front-end engineering and real in-browser interactions. No real hotel, rooms, testimonials, payments, bookings or availability are represented.
 
-## Features
+## What's in the experience
 
-- Responsive editorial hospitality landing page with original art and mobile navigation
-- Three imaginary room categories with accessible filters and saved favorites
-- Experience switcher and explanatory visitor guide
-- Date/guest selection and genuine client-side sample-cost calculation, with room-capacity checks
-- Downloadable JSON sample itinerary and print-friendly itinerary
-- Local-storage persistence and explicit reset
-- Semantic structure, keyboard focus states, reduced-motion CSS, no outside analytics or fonts
-- Robots headers intentionally block indexing of a nonreal accommodation property
+- **Cinematic hero and visual storytelling** — one original AI-generated hero scene and seven separate original, code-authored SVG scenes (not cropped duplicates) across story, room cards, room details and experiences.
+- **Three stays** — select All / For two / For family / Saved, tap ♡ to save locally, or explore a detailed accessible modal with amenities and an action that populates the trip planner.
+- **Three illustrated experiences** — changing an experience also changes the visual and stores the selected experience for the trip summary.
+- **Sample trip planner** — choose dates, room, guests and pace; get a *fictional* nightly-cost estimate; capacity checks reject 3–4 guests in two-person rooms; download a JSON summary or print it. Selected experience is included in downloads.
+- **Visitor guide** — explains demo features and limitations. Favorites, trip choices, and selected experience persist only in local browser storage. Clear button resets preferences.
+- **Accessibility and resilience** — semantic landmarks, skip link, proper image descriptions, native dialog, focus indicators, reduced-motion support, and responsive 1440/900/390 layouts. No trackers or third-party fonts, CDNs or API keys.
 
-## Run locally
+## How to use the site
 
-Node.js 20+ for build/tests. No production dependency installation required for local static build.
+1. Browse the hero and editorial story. The retreat is entirely fictional.
+2. In **Find your sanctuary**, use the category chips, tap ♡ to save, and select **Saved stays** to see only favorites. **Explore stay** opens amenities; the arrow selects that room for the sample trip.
+3. In **Experiences**, switch between a sunset sail, nature walk, or beach dining. The scene and description change immediately, and your choice becomes part of the sample itinerary.
+4. In **Dream up your little escape**, choose an arrival and departure, guests and pace. The total reflects the nightly room price times the number of nights (fictional). Export the JSON or use Print. No reservation or charge occurs.
+5. Use **Clear my saved demo preferences** near the visitor guide to reset locally stored choices.
+
+## Run and verify
+
+Requires Node.js 20+. No production runtime dependencies; all static assets are committed.
 
 ```powershell
 cd "$HOME\Downloads\selara-retreat"
@@ -23,24 +29,30 @@ npm run qa
 python -m http.server 4173 -d dist
 ```
 
-Visit http://localhost:4173/ . All paths work at the site root. No fake booking forms or transactional APIs are implied. For tests of browser behavior, install Playwright in an unrestricted machine and run `python tests/browser_qa.py` after changing its URL to the local server. This environment's Chromium could not open local files due to an administrator policy; browser screenshots are therefore *not* certified.
+On an unrestricted machine browse `http://localhost:4173/`. Browser testing is in `tests/browser_qa.py`. When local navigation is blocked by an administrator policy, `tests/offline_browser_qa.py` uses Playwright `page.set_content` with the actual HTML/CSS/scripts and embedded assets, and checks three screen widths and interactions (requires `playwright`, `beautifulsoup4` Python modules and Chromium).
 
-## Publish via Cloudflare Workers
+## Cloudflare Worker Git integration
 
-Cloudflare Workers static assets: `wrangler.jsonc` includes `assets.directory: ./dist` and `name: selara-retreat-demo`. When GitHub is connected to a **new** Cloudflare Worker with the same name:
+Existing deployment configuration is retained in `wrangler.jsonc`:
 
-- Build: `npm run build`
-- Deploy: `npx wrangler deploy`
-- Production branch: `main`
+- Worker: `selara-retreat-demo`
+- Static assets directory: `./dist`
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Production branch: `main` when connected to the repository
 
-Cloudflare Worker Git builds are distinct from Cloudflare Pages. Select the correct product and verify the Worker name exactly matches the Wrangler name. Keep this demo separate from existing Gerbang and Hushday deployments. Do not attach the real Gerbang domain.
+**Important:** pushing to GitHub triggers Cloudflare only if this Worker is configured with the right repository and auto-deploy for `main`. Verify the new commit in Cloudflare Deployments, check assets and interactive functionality at the actual Workers URL and hard-refresh if needed. GitHub Actions QA is not evidence that Workers deployed the update.
 
-Do **not** push this to an existing production repository. Request a separate private repo, e.g. `KoenjiSenpai/selara-retreat-showcase`, and connect it intentionally. Actual Cloudflare deployment needs the owner's account integration; no claim is made that remote deployment occurred.
+## Files and provenance
 
-## Data and privacy
+- `public/` — complete website; page, CSS, client-side model, UI and original art assets.
+- `scripts/create_original_scenes.py` — reproducible independent SVG scenes. Does not require image API or third-party art.
+- `scripts/build.mjs` — copy static files to `dist`, write build metadata.
+- `scripts/check.mjs` — asset and structure checks.
+- `tests/` — domain math tests, offline Chromium interaction & viewport tests.
+- `ASSET_MANIFEST.md` — exact visual inventory and production methods.
+- `QA_REPORT.md` — evidence, passes, and limits.
 
-The browser saves chosen favorites and sample trip fields locally with key `selara-showcase-v1`. The reset button clears those. Download exports only fictional itinerary fields. There is no checkout, server, lead collection or consent UI needed for this prototype. Do not submit actual sensitive data.
+## Privacy and limitations
 
-## QA status
-
-`npm run qa` includes structural checks, four model tests and a build. It does **not** certify browser visual appearance, WCAG conformance, security penetration testing or performance budgets. Validate at 390, 768, 1280, 1440 px and on real Chrome, Firefox, Safari/Edge before showcasing as production-grade.
+Browser storage uses the `selara-showcase-v1` key (compatible with v1.0 data). No real guests are contacted, no server stores preferences, and no payment is processed. JSON downloads are itinerary demonstrations, **not** booking confirmations. This is a portfolio demo with fictional descriptions and illustrative RM prices. The intentionally non-indexed site should not be presented as an operating property.
