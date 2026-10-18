@@ -39,3 +39,19 @@
 @media(max-width:750px){.editorial-interlude{grid-template-columns:1fr;margin-bottom:0;padding:0}.editorial-image{border-radius:0}.editorial-image,.editorial-image img{min-height:300px;max-height:450px}.editorial-copy{border-radius:0;padding:58px 32px}.hero-side-note{display:none}.stay-dialog-grid{grid-template-columns:1fr}.stay-dialog-image{min-height:235px;max-height:320px}.stay-dialog-copy{padding:30px 25px}.room-media{height:295px}}
 @media(max-width:570px){.editorial-image,.editorial-image img{height:280px;min-height:280px}.editorial-copy{padding:55px 24px}.editorial-copy h2{font-size:50px}.editorial-traits{gap:9px}.room-ctas{gap:10px}.room-media{height:255px}.experience-image-label{top:16px;left:18px}.stay-dialog-copy{padding:27px 20px}}
 @media print{.editorial-interlude,.stay-dialog{display:none!important}}
+
+
+/* SELARA 1.2 — original AI-generated photographic direction */
+:root{--pine:#203c32;--cream:#f7f3eb;--paper:#fffdf8;--gold:#c5975e}
+.hero-scrim{background:linear-gradient(90deg,rgba(10,26,23,.83) 0%,rgba(12,27,23,.58) 41%,rgba(19,31,26,.08) 86%)}
+.hero-image{object-position:center 55%;filter:saturate(.95) contrast(1.03)}
+.room-media{height:clamp(285px,28vw,370px)}
+.room-media:after{content:"";position:absolute;inset:auto 0 0;height:30%;background:linear-gradient(0deg,rgba(13,32,25,.16),transparent);pointer-events:none}
+.room-media img,.editorial-image img,.experience-visual img,.stay-dialog-image img{filter:saturate(.9) contrast(1.02)}
+.room-detail{padding:30px 29px 29px}.room-card{background:#fffefb;box-shadow:0 18px 50px rgba(21,46,35,.085)}
+.room-detail h3{letter-spacing:-.05em}.room-bottom{align-items:center}.room-details-trigger{font-size:12px}
+.editorial-image{background:#bd9875}.editorial-image img{object-position:center 54%}
+.experience-visual img{object-position:center 55%}.experience-seal{box-shadow:0 15px 45px rgba(28,43,32,.2)}
+.last-call{position:relative;isolation:isolate;background:#1c362f;color:#fff;overflow:hidden}.last-call:before{content:"";position:absolute;inset:0;z-index:-2;background:url('/assets/sunset-sail.webp') center 57%/cover no-repeat;filter:saturate(.7)}.last-call:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(7,23,20,.82),rgba(7,23,20,.61))}.last-call h2{max-width:900px;margin-left:auto;margin-right:auto;text-wrap:balance}
+@media(max-width:800px){.room-media{height:310px}.experience-visual img{object-position:center 48%}}
+@media(max-width:570px){.room-media{height:270px}.experience-visual img{object-position:center 46%}.last-call{padding:100px 24px}.room-detail h3{font-size:34px}}

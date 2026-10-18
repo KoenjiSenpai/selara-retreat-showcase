@@ -56,3 +56,10 @@ Existing deployment configuration is retained in `wrangler.jsonc`:
 ## Privacy and limitations
 
 Browser storage uses the `selara-showcase-v1` key (compatible with v1.0 data). No real guests are contacted, no server stores preferences, and no payment is processed. JSON downloads are itinerary demonstrations, **not** booking confirmations. This is a portfolio demo with fictional descriptions and illustrative RM prices. The intentionally non-indexed site should not be presented as an operating property.
+
+
+## v1.2 — GPT-generated photography installed (October 2026)
+
+The seven room, experience and editorial SVG scene illustrations were replaced with **seven distinct images generated through ChatGPT image creation** and optimized to WebP, including responsive small versions. The original cinematic hero photograph remains. Each image is bound into the actual HTML/JS, not merely packed into an assets directory. A photo-backed closing call-to-action now completes the visual story. The small SVG brand mark is retained only for the favicon.
+
+To verify a Git-triggered Cloudflare Workers deployment, inspect its build commit and ensure the published `index.html` footer reads `Photo edition v1.2`. Use a hard reload if an older tab has cached HTML. GitHub CI and offline Chromium checks verify the source; they cannot verify production deployment without a reachable live Worker URL.

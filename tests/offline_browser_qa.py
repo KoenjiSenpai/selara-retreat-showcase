@@ -12,21 +12,30 @@ ROOT=Path(__file__).resolve().parents[1]
 PUBLIC=ROOT/'public';SHOTS=ROOT/'qa-screenshots';SHOTS.mkdir(exist_ok=True)
 html=BeautifulSoup((PUBLIC/'index.html').read_text(encoding='utf-8'),'html.parser')
 style_text=(PUBLIC/'styles.css').read_text(encoding='utf-8')
+# The isolated about:blank document cannot fetch CSS background URLs.
+# Inline local background assets, not just HTML/JS <img> references.
+for bg in set(re.findall(r"/assets/[a-z0-9-]+\.(?:webp|png|svg)",style_text)):
+ asset=PUBLIC/bg.lstrip('/')
+ if asset.exists():
+  kind=mimetypes.guess_type(str(asset))[0] or 'application/octet-stream'
+  style_text=style_text.replace(bg,'data:'+kind+';base64,'+base64.b64encode(asset.read_bytes()).decode())
 model=(PUBLIC/'model.mjs').read_text(encoding='utf-8').replace('export ','')
 app=(PUBLIC/'app.js').read_text(encoding='utf-8')
 app=re.sub(r"^import\s*\{rooms,estimate,formatMYR\}\s*from\s*'/model\.mjs';",'',app)
 assert "from'/model.mjs'" not in app
 # App-generated images also need to resolve in this offline document.
-for match in set(re.findall(r'/assets/[a-z0-9-]+\.svg',app)):
+for match in set(re.findall(r'/assets/[a-z0-9-]+\.(?:svg|webp|png)',app)):
  file=PUBLIC/match.lstrip('/')
  if file.exists():
-  app=app.replace(match,'data:image/svg+xml;base64,'+base64.b64encode(file.read_bytes()).decode())
+  app=app.replace(match,'data:'+(mimetypes.guess_type(str(file))[0] or 'application/octet-stream')+';base64,'+base64.b64encode(file.read_bytes()).decode())
 for link in html.find_all('link'):
  if link.get('rel')==['stylesheet']:
   el=html.new_tag('style');el.string=style_text;link.replace_with(el)
  elif link.get('rel')==['manifest']:
   link.decompose()
 for im in html.find_all('img'):
+ im.attrs.pop('srcset',None)
+ im.attrs.pop('sizes',None)
  src=im.get('src','')
  if src.startswith('/assets/'):
   file=PUBLIC/src.lstrip('/'); assert file.exists(),f'Missing {file}'
@@ -46,7 +55,15 @@ with sync_playwright() as p:
   pg.set_content(page_html,wait_until='load',timeout=25000)
   pg.locator('.room-card').first.wait_for(timeout=8000)
   pg.locator('img').evaluate_all('ims=>ims.forEach(im=>im.loading="eager")')
-  pg.wait_for_timeout(1000)
+  pg.wait_for_timeout(350)
+  # Full-page screenshots can contain blank lazy-painted offscreen images even
+  # when naturalWidth is nonzero. Scroll through each section first.
+  full_height=pg.evaluate('document.documentElement.scrollHeight')
+  for y in range(0,full_height,650):
+   pg.evaluate('(top)=>window.scrollTo(0,top)',y)
+   pg.wait_for_timeout(90)
+  pg.evaluate('window.scrollTo(0,0)')
+  pg.wait_for_timeout(450)
   pg.screenshot(path=str(SHOTS/f'selara-{width}.png'),full_page=True,animations='disabled')
   scroll=pg.evaluate('document.documentElement.scrollWidth')
   if scroll>width+2:raise AssertionError(f'Horizontal overflow {scroll} at width {width}')

@@ -12,6 +12,8 @@ for(const ref of refs){const file=resolve(dir,ref.slice(1));if(!(await stat(file
 if(!js.includes('estimate(')||!js.includes('showExperience(')||!js.includes('renderSavedVisibility('))throw Error('Core interactive features missing');
 if(!css.includes('prefers-reduced-motion'))throw Error('Reduced-motion CSS missing');
 if(!html.includes('Fictional property · No real booking or payment'))throw Error('Concept disclaimer missing');
-const genericSvgPaths=['palm.svg','sunrise.svg','wave.svg'];
+const genericSvgPaths=['palm.svg','sunrise.svg','wave.svg','shore-villa.svg','grove-suite.svg','horizon-residence.svg','slow-mornings.svg','sunset-sail.svg','forest-walk.svg','starlit-dining.svg'];
 for(const ref of genericSvgPaths) if(html.includes(`/assets/${ref}`))throw Error('Old placeholder still used: '+ref);
 console.log(`Structural QA passed: ${required.length} key elements, ${refs.size} referenced visual assets`);
+
+for (const photo of ['shore-villa','grove-suite','horizon-residence','slow-mornings','sunset-sail','forest-walk','starlit-dining']) {if (!html.includes('/assets/'+photo+'.webp')&&!js.includes('/assets/'+photo+'.webp')) throw Error('Missing photograph integration: '+photo);}

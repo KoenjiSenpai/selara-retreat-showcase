@@ -1,27 +1,23 @@
-# Selara original visual asset manifest · v1.1
+# Selara photography asset manifest · v1.2
 
-All assets in `public/assets/` are part of the fictional, **non-operating** Selara hospitality showcase. No scraped guest or hotel photography, copied branding, fake testimonials or hidden image hotlinks.
+The site is an original **fictional** resort concept, not a real property, and all imagery represents imagined accommodations and experiences. No images were scraped from hotel listings. Seven new **individually generated ChatGPT images** replace the former vector illustrations. Each was separately generated as 1448 × 1086 PNG, converted to WebP and given a responsive 760px derivative.
 
-## Individually authored production visuals
+| Section | Production asset | Original GPT-generated PNG |
+|---|---|---|
+| Shore Villa | `public/assets/shore-villa.webp` + `shore-villa-sm.webp` | `tropical_villa_at_golden_hour_sunset.png` |
+| Grove Suite | `public/assets/grove-suite.webp` + `grove-suite-sm.webp` | `golden_hour_tropical_villa_retreat.png` |
+| Horizon Residence | `public/assets/horizon-residence.webp` + `horizon-residence-sm.webp` | `golden_sunset_island_retreat.png` |
+| Sunset Sail | `public/assets/sunset-sail.webp` + `sunset-sail-sm.webp` | `golden_hour_catamaran_escape.png` |
+| Forest Walk | `public/assets/forest-walk.webp` + `forest-walk-sm.webp` | `golden_jungle_boardwalk_vista.png` |
+| Starlit Dining | `public/assets/starlit-dining.webp` + `starlit-dining-sm.webp` | `candlelit_tropical_seaside_dinner.png` |
+| Slow Mornings | `public/assets/slow-mornings.webp` + `slow-mornings-sm.webp` | `golden_hour_tropical_breakfast_by_the_sea.png` |
 
-| Asset | Position / function | Origin | Descriptive alternative text |
-|---|---|---|---|
-| `coast-hero.webp` | Main full-bleed hero image | Original AI-generated cinematic concept art from initial site production, optimized to WebP; not a photograph of a real resort | AI-generated sunset island villa, palms and plunge pool |
-| `slow-mornings.svg` | Editorial brand-story interlude | Independently authored vector illustration of island breakfast still-life; generated from `scripts/create_original_scenes.py` | Coffee, fruit and journal on wood table |
-| `shore-villa.svg` | Shore room card and details dialog | Independently authored vector scene: beachfront villa and infinity pool | Shore Villa beside the water with plunge pool |
-| `grove-suite.svg` | Grove room card and details dialog | Independently authored vector scene: palm-grove pavilion | Grove Suite nestled into tropical greenery |
-| `horizon-residence.svg` | Horizon room card and details dialog | Independently authored vector scene: larger panoramic residence | Horizon Residence with sea-facing pool |
-| `sunset-sail.svg` | Experience panel when Sunset selected | Independently authored vector scene: sunset yacht | Sailboat crossing the water at sunset |
-| `forest-walk.svg` | Experience panel when Nature selected | Independently authored vector scene: rainforest walkway | Path under palms and rainforest canopy |
-| `starlit-dining.svg` | Experience panel when Dinner selected | Independently authored vector scene: lantern-lit beach dining | Open-air dinner by the shore at night |
-| `mark.svg` | Favicon | Original SVG logomark in existing v1.0 repository | Decorative |
+The original cinematic `coast-hero.webp` from the first Selara build remains in the full-bleed homepage hero. The final call-to-action intentionally reuses the existing Sunset Sail image as a background; this is an intentional decorative reuse, not a separate generated original. `mark.svg` is retained only as the brand favicon. No room or experience uses an SVG illustration.
 
-## Visual direction
+## Implementation and quality rules
 
-- **Art direction:** coastal editorial; mineral green, warm cream, sun-faded rose, gold, sea glass and pale teak.
-- **Hero:** cinematic photographic AI concept, no text baked into image. **Supporting collection:** intentionally illustrated editorial/postcard scenes with shared palette and distinct geometry.
-- **Sizes:** SVG scenery `1200 × 800` responsive/viewBox; photographic hero WebP `1672 × 941` optimized for visible first screen.
-- **Loading:** Hero uses `fetchpriority=high`; below-fold scenes lazy load. SVGs remain crisp and text-free. No collage cut into assets; each scene is separately composed in the source generator.
-- **Provenance honesty:** Vector scenes are code-authored SVGs, **not** text-to-image AI photographs. When the image-generation tool is not available, do not mislabel the generated illustrations as photorealistic AI images.
-
-The old derivative `coast-card.webp` and generic placeholder vectors from v1.0 were retired in v1.1. Every new scene is intentionally linked to a visible UI section or working dialog. The resort, rates, inventory, experiences, and reservations are fictional.
+- Each card, editorial interlude, dynamic experience panel and details dialog references a genuine WebP image in the repository.
+- Images display with `object-fit: cover`; card and editorial illustrations use responsive `srcset`, below-fold loading is lazy, the homepage hero loads eagerly.
+- Visitors are explicitly told all property images, prices and experiences are fictional concept content.
+- GitHub tree and production build must contain actual binary WebP files. Do not claim visual QA until a browser test has shown every image with a nonzero natural width.
+- Copy, logos and icons are HTML/CSS or the tiny SVG brand mark; these are not presented as generated photographic artwork.
